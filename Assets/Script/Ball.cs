@@ -5,12 +5,16 @@ using UnityEngine;
 
 public class Ball : MonoBehaviour
 {
-    private Vector2 movementVector = new Vector2(-1,0);
+    [SerializeField]
+    private Vector2 movementVector = new Vector2(-1,-1);
     [SerializeField]
     private float currentSpeed = 0;
+    [SerializeField]
     private float currentVerticalDirection = 0;
+    [SerializeField]
     private float currentHorzantalDirection = 0;
-    private float acceleration = 8f;
+    [SerializeField]
+    private float acceleration = 16f;
     private float maxSpeed = 200f;
     private Rigidbody2D rb2d;
 
@@ -22,7 +26,7 @@ public class Ball : MonoBehaviour
 
     private void Start()
     {
-        currentSpeed += 32;
+        currentSpeed += 64;
     }
     // Update is called once per frame
     void Update()
@@ -50,9 +54,69 @@ public class Ball : MonoBehaviour
         }
     }
 
-    public void Hit()
+    public void Hit(bool PaddleHit)
     {
-        movementVector = -movementVector;
+        if(PaddleHit == true)
+        {
+            if (movementVector.x == -1)
+            {
+                if (movementVector.y == -1)
+                {
+                    // -1,-1
+                    movementVector = new Vector2(1, -1);
+                }
+                else
+                {
+                    // -1,1
+                    movementVector = new Vector2(1, 1);
+                }
+            }
+            else
+            {
+                if (movementVector.y == -1)
+                {
+                    // 1,-1
+                    movementVector = new Vector2(-1, -1);
+                }
+                else
+                {
+                    //1,1
+                    movementVector = new Vector2(-1, 1);
+                }
+            }
+        }
+
+        else
+        {
+            if (movementVector.x == -1)
+            {
+                if (movementVector.y == -1)
+                {
+                    // -1,-1
+                    movementVector = new Vector2(-1, 1);
+                }
+                else
+                {
+                    // -1,1
+                    movementVector = new Vector2(-1, -1);
+                }
+            }
+            else
+            {
+                if (movementVector.y == -1)
+                {
+                    // 1,-1
+                    movementVector = new Vector2(1, 1);
+                }
+                else
+                {
+                    //1,1
+                    movementVector = new Vector2(1, -1);
+                }
+            }
+        }
+
+        Debug.Log(movementVector);
         CaculateSpeed();
     }
 
@@ -66,5 +130,18 @@ public class Ball : MonoBehaviour
     {
         rb2d.velocity = new Vector2(transform.right.x * currentSpeed * currentHorzantalDirection * Time.fixedDeltaTime, transform.up.y * currentSpeed * currentVerticalDirection * Time.fixedDeltaTime);
         //Debug.Log((Vector2)transform.right);
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        Debug.Log("Hit");
+        if(collision.gameObject.tag == "Paddle")
+        {
+            Hit(true);
+        }
+        else
+        {
+            Hit(false);
+        }
     }
 }

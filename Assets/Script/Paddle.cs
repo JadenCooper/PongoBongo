@@ -9,7 +9,7 @@ public class Paddle : MonoBehaviour
     [SerializeField]
     private float currentSpeed = 0;
     private float currentForewardDirection = 0;
-    private float acceleration = 8f;
+    private float acceleration = 16f;
     private float deacceleration = 8f;
     private float maxSpeed = 50f;
     private Rigidbody2D rb2d;

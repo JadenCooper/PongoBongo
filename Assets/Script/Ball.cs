@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,7 +5,7 @@ using UnityEngine;
 public class Ball : MonoBehaviour
 {
     [SerializeField]
-    private Vector2 movementVector = new Vector2(-1,-1);
+    private Vector2 movementVector;
     [SerializeField]
     private float currentSpeed = 0;
     [SerializeField]
@@ -14,7 +13,7 @@ public class Ball : MonoBehaviour
     [SerializeField]
     private float currentHorzantalDirection = 0;
     [SerializeField]
-    private float acceleration = 16f;
+    private float acceleration = 32f;
     private float maxSpeed = 200f;
     private Rigidbody2D rb2d;
 
@@ -27,6 +26,7 @@ public class Ball : MonoBehaviour
     private void Start()
     {
         currentSpeed += 64;
+        TipOff();
     }
     // Update is called once per frame
     void Update()
@@ -124,6 +124,28 @@ public class Ball : MonoBehaviour
     {
         currentSpeed += acceleration * Time.deltaTime;
         currentSpeed = Mathf.Clamp(currentSpeed, 0, maxSpeed);
+    }
+
+    private void TipOff()
+    {
+        switch(Random.Range(0,3))
+        {
+            case 0:
+                movementVector = new Vector2(1, 1);
+                break;
+
+            case 1:
+                movementVector = new Vector2(-1, -1);
+                break;
+
+            case 2:
+                movementVector = new Vector2(-1, 1);
+                break;
+
+            case 3:
+                movementVector = new Vector2(1, -1);
+                break;
+        }
     }
 
     private void FixedUpdate()

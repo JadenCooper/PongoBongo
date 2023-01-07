@@ -9,9 +9,11 @@ public class Paddle : MonoBehaviour
     [SerializeField]
     private float currentSpeed = 0;
     private float currentForewardDirection = 0;
-    private float acceleration = 16f;
-    private float deacceleration = 8f;
-    private float maxSpeed = 50f;
+    [SerializeField]
+    private float acceleration = 64f;
+    private float deacceleration = 32f;
+    [SerializeField]
+    private float maxSpeed = 200f;
     private Rigidbody2D rb2d;
     // 0 = AI, 1 = Player1, 2 = Player2 
     public int PlayerType = 1;

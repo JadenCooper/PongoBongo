@@ -13,16 +13,38 @@ public class Paddle : MonoBehaviour
     private float deacceleration = 8f;
     private float maxSpeed = 50f;
     private Rigidbody2D rb2d;
+    // 0 = AI, 1 = Player1, 2 = Player2 
+    public int PlayerType = 1;
+    private string vertAxis;
     // Start is called before the first frame update
     void Awake()
     {
         rb2d = GetComponent<Rigidbody2D>();
+        switch(PlayerType)
+        {
+            case 0:
+                //Ai
+                break;
+
+            case 1:
+                //Player One
+                vertAxis = "Vertical(Player1)";
+                break;
+            case 2:
+                //Player Two
+                vertAxis = "Vertical(Player2)";
+                break;
+
+            default:
+                //PlayerType Broke
+                break;
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
-        movementVector = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
+        movementVector = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw(vertAxis));
         Move();
     }
 

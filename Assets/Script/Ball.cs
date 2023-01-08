@@ -1,9 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Ball : MonoBehaviour
 {
+    const float STARTSPEED = 64f;
     [SerializeField]
     private Vector2 movementVector;
     [SerializeField]
@@ -17,6 +19,8 @@ public class Ball : MonoBehaviour
     private float maxSpeed = 200f;
     private Rigidbody2D rb2d;
 
+    public UnityEvent<Ball> OnCaught = new UnityEvent<Ball>();
+
     // Start is called before the first frame update
     void Awake()
     {
@@ -25,7 +29,7 @@ public class Ball : MonoBehaviour
 
     private void Start()
     {
-        currentSpeed += 64;
+        currentSpeed = STARTSPEED;
         TipOff();
     }
     // Update is called once per frame
@@ -122,7 +126,7 @@ public class Ball : MonoBehaviour
 
     private void CaculateSpeed()
     {
-        currentSpeed += acceleration * Time.deltaTime;
+        currentSpeed += acceleration;
         currentSpeed = Mathf.Clamp(currentSpeed, 0, maxSpeed);
     }
 
@@ -161,9 +165,20 @@ public class Ball : MonoBehaviour
         {
             Hit(true);
         }
+        else if(collision.gameObject.tag == "Catch")
+        {
+            OnCaught?.Invoke(this);
+        }
         else
         {
             Hit(false);
-        }
+       
+       }
+    }
+
+    public void SetUp()
+    {
+        currentSpeed = STARTSPEED;
+        TipOff();
     }
 }

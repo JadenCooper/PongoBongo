@@ -160,20 +160,44 @@ public class Ball : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        Debug.Log("Hit");
-        if(collision.gameObject.tag == "Paddle")
+        //Debug.Log("Hit Collision");
+        //if (collision.gameObject.tag == "Paddle")
+        //{
+        //    Debug.Log("Horizan");
+        //    Hit(true);
+        //}
+        //else if (collision.gameObject.tag == "Catch")
+        //{
+        //    OnCaught?.Invoke(this);
+        //}
+        //else
+        //{
+        if (collision.gameObject.tag == "Wall")
         {
+            Debug.Log("Vert");
+            Hit(false);
+        }
+
+        //}
+    }
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        Debug.Log("Hit Trigger");
+        if (collision.gameObject.tag == "Paddle")
+        {
+            Debug.Log("Horizan");
             Hit(true);
         }
-        else if(collision.gameObject.tag == "Catch")
+        else if (collision.gameObject.tag == "Catch")
         {
             OnCaught?.Invoke(this);
         }
         else
         {
+            Debug.Log("Vert");
             Hit(false);
-       
-       }
+
+        }
     }
 
     public void SetUp()

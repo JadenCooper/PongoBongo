@@ -18,6 +18,7 @@ public class Paddle : MonoBehaviour
     // 0 = AI, 1 = Player1, 2 = Player2 
     public int PlayerType = 1;
     private string vertAxis;
+    public Vector3 IntialScale;
     // Start is called before the first frame update
     void Awake()
     {
@@ -41,6 +42,7 @@ public class Paddle : MonoBehaviour
                 //PlayerType Broke
                 break;
         }
+        IntialScale = gameObject.transform.localScale;
     }
 
     // Update is called once per frame
@@ -79,5 +81,12 @@ public class Paddle : MonoBehaviour
     private void FixedUpdate()
     {
         rb2d.velocity = (Vector2)transform.up * currentSpeed * currentForewardDirection * Time.fixedDeltaTime;
+    }
+    public void ResetPlay()
+    {
+        gameObject.transform.localScale = IntialScale;
+        Vector3 position = gameObject.transform.position;
+        gameObject.transform.position = new Vector3(position.x, 0, 0);
+        currentSpeed = 0;
     }
 }

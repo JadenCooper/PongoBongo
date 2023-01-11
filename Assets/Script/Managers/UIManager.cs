@@ -7,6 +7,7 @@ public class UIManager : MonoBehaviour
 {
     public List<TMP_Text> PlayerScoreTexts = new List<TMP_Text>();
     public GameObject EndGameUI;
+    public GameObject PauseGameUI;
     public TMP_Text WonPlayer;
     // Start is called before the first frame update
     void Start()
@@ -40,10 +41,12 @@ public class UIManager : MonoBehaviour
         if (Time.timeScale == 1f)
         {
             Time.timeScale = 0f;
+            PauseGameUI.SetActive(true);
         }
         else
         {
             Time.timeScale = 1f;
+            PauseGameUI.SetActive(false);
         }
     }
 }

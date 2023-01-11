@@ -84,6 +84,7 @@ public class GameManager : MonoBehaviour
         foreach (Ball ball in balls)
         {
             ball.gameObject.SetActive(true);
+            ball.gameObject.transform.localPosition = Vector3.zero;
             ball.SetUp();
         }
     }

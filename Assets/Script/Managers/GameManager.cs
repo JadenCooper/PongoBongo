@@ -8,7 +8,8 @@ public class GameManager : MonoBehaviour
     public Vector2 Scores = new Vector2(0, 0);
     public UIManager uIManager;
     public int WinScore = 5;
-    public string[] PlayerNames = new string[2]; 
+    public string[] PlayerNames = new string[2];
+    private bool GameEnded = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -18,7 +19,10 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        if (Input.GetButtonDown("Pause") && !GameEnded)
+        {
+            uIManager.PauseGame();
+        }
     }
 
     public void ResetBall(Ball ball)
@@ -63,6 +67,7 @@ public class GameManager : MonoBehaviour
             ball.gameObject.transform.localPosition = Vector3.zero;
             ball.gameObject.SetActive(false);
         }
+        GameEnded = true;
         uIManager.EndGame(WonPlayerName);
     }
 
@@ -70,6 +75,7 @@ public class GameManager : MonoBehaviour
     {
         Scores = Vector2.zero;
         uIManager.UpdateScores(Scores);
+        GameEnded = false;
         uIManager.StartGame();
         foreach(Paddle paddle in paddles)
         {

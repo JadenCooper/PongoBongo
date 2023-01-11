@@ -16,7 +16,6 @@ public class Ball : MonoBehaviour
     private float currentHorzantalDirection = 0;
     [SerializeField]
     private float acceleration = 32f;
-    private float maxSpeed = 200f;
     private Rigidbody2D rb2d;
 
     public UnityEvent<Ball> OnCaught = new UnityEvent<Ball>();
@@ -120,14 +119,12 @@ public class Ball : MonoBehaviour
             }
         }
 
-        Debug.Log(movementVector);
         CaculateSpeed();
     }
 
     private void CaculateSpeed()
     {
         currentSpeed += acceleration;
-        currentSpeed = Mathf.Clamp(currentSpeed, 0, maxSpeed);
     }
 
     private void TipOff()
@@ -155,25 +152,19 @@ public class Ball : MonoBehaviour
     private void FixedUpdate()
     {
         rb2d.velocity = new Vector2(transform.right.x * currentSpeed * currentHorzantalDirection * Time.fixedDeltaTime, transform.up.y * currentSpeed * currentVerticalDirection * Time.fixedDeltaTime);
-        //Debug.Log((Vector2)transform.right);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.tag == "Wall")
         {
-            Debug.Log("Vert");
             Hit(false);
         }
-
-        //}
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log("Hit Trigger");
         if (collision.gameObject.tag == "Paddle")
         {
-            Debug.Log("Horizan");
             Hit(true);
         }
         else if (collision.gameObject.tag == "Catch")
@@ -182,7 +173,6 @@ public class Ball : MonoBehaviour
         }
         else
         {
-            Debug.Log("Vert");
             Hit(false);
 
         }

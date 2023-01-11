@@ -34,4 +34,16 @@ public class UIManager : MonoBehaviour
     {
         EndGameUI.SetActive(false);
     }
+
+    public void PauseGame()
+    {
+        if (Time.timeScale == 1f)
+        {
+            Time.timeScale = 0f;
+        }
+        else
+        {
+            Time.timeScale = 1f;
+        }
+    }
 }

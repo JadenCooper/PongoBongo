@@ -19,6 +19,10 @@ public class Paddle : MonoBehaviour
     public int PlayerType = 1;
     private string vertAxis;
     public Vector3 IntialScale;
+    public bool Player = true;
+    public GameObject ball;
+    private bool choiceMade = false;
+    public float choiceTime = 0.4f;
     // Start is called before the first frame update
     void Awake()
     {
@@ -48,10 +52,40 @@ public class Paddle : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        movementVector = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw(vertAxis));
+        if (Player)
+        {
+            movementVector = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw(vertAxis));
+        }
+        else
+        {
+            if (!choiceMade)
+            {
+                choiceMade = true;
+                Vector2 ballPosition = ball.transform.position;
+                float paddlePosition = gameObject.transform.position.y;
+                if (ballPosition.y > paddlePosition)
+                {
+                    movementVector = new Vector2(0, 1);
+                }
+                else if (ballPosition.y < paddlePosition)
+                {
+                    movementVector = new Vector2(0, -1);
+                }
+                else
+                {
+                    movementVector = Vector2.zero;
+                }
+                StartCoroutine(WaitTimer());
+            }
+        }
         Move();
     }
 
+    private IEnumerator WaitTimer()
+    {
+        yield return new WaitForSeconds(choiceTime);
+        choiceMade = false;
+    }
     public void Move()
     {
         CaculateSpeed();

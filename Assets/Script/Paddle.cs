@@ -9,11 +9,10 @@ public class Paddle : MonoBehaviour
     [SerializeField]
     private float currentSpeed = 0;
     private float currentForewardDirection = 0;
-    [SerializeField]
-    private float acceleration = 64f;
+    public float acceleration = 64f;
     private float deacceleration = 32f;
     [SerializeField]
-    private float maxSpeed = 200f;
+    private float maxSpeed = 300f;
     private Rigidbody2D rb2d;
     // 0 = AI, 1 = Player1, 2 = Player2 
     public int PlayerType = 1;
@@ -23,14 +22,22 @@ public class Paddle : MonoBehaviour
     public GameObject ball;
     private bool choiceMade = false;
     public float choiceTime = 0.4f;
+    public bool doubleAcceleration = false;
     // Start is called before the first frame update
     void Awake()
     {
         rb2d = GetComponent<Rigidbody2D>();
-        switch(PlayerType)
+        IntialScale = gameObject.transform.localScale;
+    }
+
+    public void SetPlayerType(int playerType)
+    {
+        PlayerType = playerType;
+        switch (PlayerType)
         {
             case 0:
                 //Ai
+                Player = false;
                 break;
 
             case 1:
@@ -46,7 +53,6 @@ public class Paddle : MonoBehaviour
                 //PlayerType Broke
                 break;
         }
-        IntialScale = gameObject.transform.localScale;
     }
 
     // Update is called once per frame
@@ -103,7 +109,14 @@ public class Paddle : MonoBehaviour
     {
         if (MathF.Abs(movementVector.y) > 0)
         {
-            currentSpeed += acceleration * Time.deltaTime;
+            if (doubleAcceleration == true)
+            {
+                currentSpeed += currentSpeed + 16f * Time.deltaTime;
+            }
+            else
+            {
+                currentSpeed += acceleration * Time.deltaTime;
+            }
         }
         else
         {

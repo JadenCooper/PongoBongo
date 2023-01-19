@@ -14,12 +14,13 @@ public class Ball : MonoBehaviour
     private float currentVerticalDirection = 0;
     [SerializeField]
     private float currentHorzantalDirection = 0;
-    [SerializeField]
-    private float acceleration = 32f;
+
+    public float acceleration = 32f;
     private Rigidbody2D rb2d;
-
+    [SerializeField]
+    private float maxSpeed = 500f;
     public UnityEvent<Ball> OnCaught = new UnityEvent<Ball>();
-
+    public bool doubleAcceleration = false;
     // Start is called before the first frame update
     void Awake()
     {
@@ -124,7 +125,15 @@ public class Ball : MonoBehaviour
 
     private void CaculateSpeed()
     {
-        currentSpeed += acceleration;
+        if (doubleAcceleration == true)
+        {
+            currentSpeed += currentSpeed;
+        }
+        else
+        {
+            currentSpeed += acceleration;
+        }
+        currentSpeed = Mathf.Clamp(currentSpeed, 0, maxSpeed);
     }
 
     private void TipOff()

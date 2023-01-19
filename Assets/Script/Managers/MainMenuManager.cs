@@ -18,7 +18,7 @@ public class MainMenuManager : MonoBehaviour
         playSettingsSO.PlayerTypes[1] = 0;
         playSettingsSO.OtherSettings[0] = SinglePlayerScoreSlider.value;
         playSettingsSO.OtherSettings[1] = SinglePlayerSpeedDropDown.value;
-        //sceneChange.PlayGameTwoPlayer();
+        sceneChange.PlayGameTwoPlayer();
     }
 
     public void StartTwoPlayer()
@@ -27,6 +27,6 @@ public class MainMenuManager : MonoBehaviour
         playSettingsSO.PlayerTypes[1] = 2;
         playSettingsSO.OtherSettings[0] = TwoPlayerScoreSlider.value;
         playSettingsSO.OtherSettings[1] = TwoPlayerSpeedDropDown.value;
-        //sceneChange.PlayGameTwoPlayer();
+        sceneChange.PlayGameTwoPlayer();
     }
 }

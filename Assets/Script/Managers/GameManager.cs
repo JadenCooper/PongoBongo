@@ -7,16 +7,49 @@ public class GameManager : MonoBehaviour
     public List<Paddle> paddles = new List<Paddle>();
     public Vector2 Scores = new Vector2(0, 0);
     public UIManager uIManager;
-    public int WinScore = 5;
+    public float WinScore = 5;
     public string[] PlayerNames = new string[2];
     private bool GameEnded = false;
-    // Start is called before the first frame update
-    void Start()
+    public PlaySettingsSO playSettingsSO;
+
+    private void Start()
     {
-
+        for (int i = 0; i < paddles.Count; i++)
+        {
+            paddles[i].SetPlayerType(playSettingsSO.PlayerTypes[i]);
+            switch (playSettingsSO.OtherSettings[1])
+            {
+                case 0:
+                    // Normal
+                    paddles[i].acceleration = 32f;
+                    balls[0].acceleration = 32f;
+                    break;
+                case 1:
+                    //Fast
+                    paddles[i].acceleration = 64f;
+                    balls[0].acceleration = 32f;
+                    break;
+                case 2:
+                    //Extreme
+                    paddles[i].acceleration = 88f;
+                    balls[0].acceleration = 32f;
+                    break;
+                case 3:
+                    //Double
+                    paddles[i].doubleAcceleration = true;
+                    balls[0].doubleAcceleration = true;
+                    break;
+                case 4:
+                    //Slow
+                    paddles[i].acceleration = 16f;
+                    balls[0].acceleration = 32f;
+                    break;
+                default:
+                    break;
+            }
+        }
+        WinScore = playSettingsSO.OtherSettings[0];
     }
-
-    // Update is called once per frame
     void Update()
     {
         if (Input.GetButtonDown("Pause") && !GameEnded)

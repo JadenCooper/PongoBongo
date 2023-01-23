@@ -92,6 +92,7 @@ public class Ball : MonoBehaviour
 
         else
         {
+            // Vertical Bounce
             if (movementVector.x == -1)
             {
                 if (movementVector.y == -1)
@@ -169,6 +170,10 @@ public class Ball : MonoBehaviour
         {
             Hit(false);
         }
+        else
+        {
+            Hit(false);
+        }
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -179,11 +184,6 @@ public class Ball : MonoBehaviour
         else if (collision.gameObject.tag == "Catch")
         {
             OnCaught?.Invoke(this);
-        }
-        else
-        {
-            Hit(false);
-
         }
     }
 

@@ -170,6 +170,10 @@ public class Ball : MonoBehaviour
         {
             Hit(false);
         }
+        else if (collision.gameObject.tag == "HWall")
+        {
+            Hit(true);
+        }
         else
         {
             Hit(false);

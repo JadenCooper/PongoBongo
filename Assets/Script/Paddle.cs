@@ -49,6 +49,16 @@ public class Paddle : MonoBehaviour
                 vertAxis = "Vertical(Player2)";
                 break;
 
+            case 3:
+                //Player Three
+                vertAxis = "Vertical(Player3)";
+                break;
+
+            case 4:
+                //Player Four
+                vertAxis = "Vertical(Player4)";
+                break;
+
             default:
                 //PlayerType Broke
                 break;

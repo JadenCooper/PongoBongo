@@ -5,11 +5,13 @@ public class GameManager : MonoBehaviour
 {
     public List<Ball> balls = new List<Ball>();
     public List<Paddle> paddles = new List<Paddle>();
-    public Vector2 Scores = new Vector2(0, 0);
+    public List<float> Scores = new List<float>();
     public UIManager uIManager;
     public float WinScore = 5;
     public string[] PlayerNames = new string[2];
     private bool GameEnded = false;
+    private bool FreeForAll = false;
+    private float ScoreChange = 1;
     public PlaySettingsSO playSettingsSO;
 
     private void Start()
@@ -49,6 +51,21 @@ public class GameManager : MonoBehaviour
             }
         }
         WinScore = playSettingsSO.OtherSettings[0];
+        if (playSettingsSO.OtherSettings[2] == 1)
+        {
+            //Free For All Mode
+            Scores.Add(0);
+            Scores.Add(0);
+            uIManager.SetupFreeForAll();
+            FreeForAll = true;
+            ScoreChange = -1;
+            for (int i = 0; i < Scores.Count; i++)
+            {
+                Scores[i] = WinScore;
+            }
+            WinScore = 0;
+            uIManager.UpdateScores(Scores);
+        }
     }
     void Update()
     {
@@ -60,35 +77,71 @@ public class GameManager : MonoBehaviour
 
     public void ResetBall(Ball ball)
     {
-        if (ball.gameObject.transform.localPosition.x < 0)
+        Vector2 ballPosition = ball.gameObject.transform.localPosition;
+        int playerIndex = 0;
+        if (FreeForAll)
         {
-            // Player 2 Scores
-            Scores.y += 1;
-            uIManager.UpdateScores(Scores);
-            if (Scores.y >= WinScore)
+            // Free For All
+            if (ballPosition.x < 0)
             {
-                GameOver(PlayerNames[1]);
+                if (ballPosition.y < 0)
+                {
+                    // Player 3 Loses Life
+                    playerIndex = 2;
+                }
+                else
+                {
+                    //Player 1 loses Life
+                    playerIndex = 0;
+                }
             }
             else
             {
-                ball.gameObject.transform.localPosition = Vector3.zero;
-                ball.SetUp();
+                if (ballPosition.y < 0)
+                {
+                    //Player 2 Loses Life
+                    playerIndex = 1;
+                }
+                else
+                {
+                    // Player 4 Loses Life
+                    playerIndex = 3;
+                }
             }
         }
         else
         {
-            // Player 1 Scores
-            Scores.x += 1;
-            uIManager.UpdateScores(Scores);
-            if (Scores.x >= WinScore)
+            // Teams
+            if (ballPosition.x < 0)
             {
-                GameOver(PlayerNames[0]);
+                // Player 2 Scores
+                playerIndex = 1;
             }
             else
             {
-                ball.gameObject.transform.localPosition = Vector3.zero;
-                ball.SetUp();
+                // Player 1 Scores
+                playerIndex = 0;
             }
+        }
+
+        Scores[playerIndex] += ScoreChange;
+        uIManager.UpdateScores(Scores);
+        if (Scores[0] == WinScore)
+        {
+            if (FreeForAll)
+            {
+                // Player Eliminated
+
+            }
+            else
+            {
+                GameOver(PlayerNames[0]);
+            }
+        }
+        else
+        {
+            ball.gameObject.transform.localPosition = Vector3.zero;
+            ball.SetUp();
         }
     }
 
@@ -106,7 +159,10 @@ public class GameManager : MonoBehaviour
 
     public void StartGame()
     {
-        Scores = Vector2.zero;
+        for (int i = 0; i < Scores.Count; i++)
+        {
+            Scores[i] = 0;
+        }
         uIManager.UpdateScores(Scores);
         GameEnded = false;
         uIManager.StartGame();

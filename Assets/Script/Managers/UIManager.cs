@@ -6,25 +6,26 @@ using TMPro;
 public class UIManager : MonoBehaviour
 {
     public List<TMP_Text> PlayerScoreTexts = new List<TMP_Text>();
+    public List<TMP_Text> PlayerNameTexts = new List<TMP_Text>();
+    public GameObject FreeForAllUIHolder;
     public GameObject EndGameUI;
     public GameObject PauseGameUI;
     public TMP_Text WonPlayer;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
-    // Update is called once per frame
-    void Update()
+    public void SetupFreeForAll()
     {
-        
+        FreeForAllUIHolder.SetActive(true);
+        PlayerNameTexts[0].text = "Player One Lives:";
+        PlayerNameTexts[1].text = "Player Two Lives";
+        PlayerNameTexts[2].text = "Player One Lives:";
+        PlayerNameTexts[3].text = "Player Two Lives";
     }
-
-    public void UpdateScores(Vector2 PlayerScores)
+    public void UpdateScores(List<float> PlayerScores)
     {
-        PlayerScoreTexts[0].text = PlayerScores.x.ToString();
-        PlayerScoreTexts[1].text = PlayerScores.y.ToString();
+        for (int i = 0; i < PlayerScoreTexts.Count; i++)
+        {
+            PlayerScoreTexts[i].text = PlayerScores[i].ToString();
+        }
     }
     public void EndGame(string WonPlayerName)
     {

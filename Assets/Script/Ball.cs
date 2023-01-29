@@ -18,7 +18,7 @@ public class Ball : MonoBehaviour
     public float acceleration = 32f;
     private Rigidbody2D rb2d;
     [SerializeField]
-    private float maxSpeed = 500f;
+    private float maxSpeed = 800f;
     public UnityEvent<Ball> OnCaught = new UnityEvent<Ball>();
     public bool doubleAcceleration = false;
     // Start is called before the first frame update

@@ -20,6 +20,16 @@ public class UIManager : MonoBehaviour
         PlayerNameTexts[2].text = "Player One Lives:";
         PlayerNameTexts[3].text = "Player Two Lives";
     }
+    public void RemovePlayer(int playerIndex)
+    {
+        PlayerScoreTexts[playerIndex].color = Color.clear;
+        PlayerNameTexts[playerIndex].color = Color.clear;
+    }
+    public void AddPlayer(int playerIndex)
+    {
+        PlayerScoreTexts[playerIndex].color = Color.white;
+        PlayerNameTexts[playerIndex].color = Color.white;
+    }
     public void UpdateScores(List<float> PlayerScores)
     {
         for (int i = 0; i < PlayerScoreTexts.Count; i++)

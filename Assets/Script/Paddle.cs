@@ -17,7 +17,8 @@ public class Paddle : MonoBehaviour
     // 0 = AI, 1 = Player1, 2 = Player2 
     public int PlayerType = 1;
     private string vertAxis;
-    public Vector3 IntialScale;
+    private Vector3 IntialScale;
+    private Vector3 IntialPosition;
     public bool Player = true;
     public GameObject ball;
     private bool choiceMade = false;
@@ -28,6 +29,7 @@ public class Paddle : MonoBehaviour
     {
         rb2d = GetComponent<Rigidbody2D>();
         IntialScale = gameObject.transform.localScale;
+        IntialPosition = gameObject.transform.localPosition;
     }
 
     public void SetPlayerType(int playerType)
@@ -143,7 +145,7 @@ public class Paddle : MonoBehaviour
     {
         gameObject.transform.localScale = IntialScale;
         Vector3 position = gameObject.transform.position;
-        gameObject.transform.position = new Vector3(position.x, 0, 0);
+        gameObject.transform.position = IntialPosition;
         currentSpeed = 0;
     }
 }

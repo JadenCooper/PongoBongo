@@ -17,6 +17,8 @@ public class Ball : MonoBehaviour
 
     public float acceleration = 32f;
     private Rigidbody2D rb2d;
+    private Vector3 StartPosition;
+    private Vector3 OrginalScale;
     [SerializeField]
     private float maxSpeed = 800f;
     public UnityEvent<Ball> OnCaught = new UnityEvent<Ball>();
@@ -30,6 +32,8 @@ public class Ball : MonoBehaviour
     private void Start()
     {
         currentSpeed = STARTSPEED;
+        OrginalScale = gameObject.transform.localScale;
+        StartPosition = gameObject.transform.localPosition;
         TipOff();
     }
     // Update is called once per frame
@@ -196,5 +200,11 @@ public class Ball : MonoBehaviour
     {
         currentSpeed = STARTSPEED;
         TipOff();
+    }
+
+    public void ReturnToStart()
+    {
+        currentSpeed = STARTSPEED;
+        gameObject.transform.localPosition = StartPosition;
     }
 }

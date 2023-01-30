@@ -170,7 +170,6 @@ public class Ball : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        Debug.Log("Hit");
         if (collision.gameObject.tag == "Wall")
         {
             Hit(false);

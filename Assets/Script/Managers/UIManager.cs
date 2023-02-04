@@ -11,7 +11,6 @@ public class UIManager : MonoBehaviour
     public GameObject EndGameUI;
     public GameObject PauseGameUI;
     public TMP_Text WonPlayer;
-    public AudioSource mainGameMusic;
 
     public void SetupFreeForAll()
     {
@@ -53,14 +52,12 @@ public class UIManager : MonoBehaviour
         if (Time.timeScale == 1f)
         {
             Time.timeScale = 0f;
-            mainGameMusic.Pause();
             PauseGameUI.SetActive(true);
         }
         else
         {
             Time.timeScale = 1f;
             PauseGameUI.SetActive(false);
-            mainGameMusic.Play();
         }
     }
 }

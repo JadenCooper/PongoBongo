@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6b71f205b197b2141aede390ef532489, type: 3}
+  m_Name: NormalMusicPlaylist
+  m_EditorClassIdentifier: 
+  SongPitchList:
+  - {x: 1.33, y: 1.22}
+  - {x: 0.75, y: 1.05}
+  - {x: 1.55, y: 0.7}
+  - {x: 1.22, y: 1.22}
+  - {x: 1.22, y: 1.22}
+  - {x: 1.2, y: 1.2}
+  - {x: 1.35, y: 1.35}
+  SongList:
+  - {fileID: 8300000, guid: f80de85e06c89504e9cd1bd59ce5eeaf, type: 3}
+  - {fileID: 8300000, guid: d2e5adad4b56afb44834e984c945e90c, type: 3}
+  - {fileID: 8300000, guid: 281db1a663e18104ebfe7002e3e9a508, type: 3}
+  - {fileID: 8300000, guid: 5c68d4da371b0cb499158d8e1a69a818, type: 3}
+  - {fileID: 8300000, guid: 6a1d13334e9975c4a80537bbaab84360, type: 3}
+  - {fileID: 8300000, guid: 483ff19153b25f848bf19df2776c8b01, type: 3}
+  - {fileID: 8300000, guid: 8440542161b62fa4f91d63db2eadd16a, type: 3}

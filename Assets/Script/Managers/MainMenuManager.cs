@@ -7,11 +7,10 @@ using UnityEngine.UI;
 public class MainMenuManager : MonoBehaviour
 {
     public PlaySettingsSO playSettingsSO;
-    public SceneChange sceneChange;
+    public SceneChange sceneChanger;
     public Slider BotSlider;
     public TMP_Dropdown PlayerAmountDropDown;
     public bool PartyMode = false;
-    public TMP_Text GameModeTextBox;
     public Slider ScoreSlider;
     public TMP_Dropdown SpeedDropdown;
     public void RestrictSlider()
@@ -28,7 +27,33 @@ public class MainMenuManager : MonoBehaviour
 
     public void StartGame()
     {
-
+        if (PartyMode)
+        {
+            //Partymode
+            if (playSettingsSO.OtherSettings[2] == 1)
+            {
+                // Party 4 Player
+                sceneChanger.ChangeScene("FourPlayerPartyMode");
+            }
+            else
+            {
+                // Party 2 Player
+                sceneChanger.ChangeScene("TwoPlayerPartyMode");
+            }
+        }
+        else
+        {
+            if (playSettingsSO.OtherSettings[2] == 1)
+            {
+                // Standared 4 Player
+                sceneChanger.ChangeScene("FourPlayerMode");
+            }
+            else
+            {
+                // Standared 2 Player
+                sceneChanger.ChangeScene("TwoPlayerMode");
+            }
+        }
     }
     public void SetGameOptions()
     {
@@ -45,9 +70,25 @@ public class MainMenuManager : MonoBehaviour
         playSettingsSO.OtherSettings[0] = ScoreSlider.value;
         playSettingsSO.OtherSettings[1] = SpeedDropdown.value;
     }
+    public void SetGameOptionsUI()
+    {
+        PlayerAmountDropDown.value = (int)playSettingsSO.OtherSettings[2];
+        ScoreSlider.value = playSettingsSO.OtherSettings[0];
+        SpeedDropdown.value = (int)playSettingsSO.OtherSettings[1];
+        int temp = 0;
+        for (int i = 0; i < playSettingsSO.PlayerTypes.Length; i++)
+        {
+            if (playSettingsSO.PlayerTypes[i] == 0)
+            {
+                temp++;
+            }
+        }
+        BotSlider.value = temp;
+    }
+
     public void SetDefualtGameOptions()
     {
-        for (int t = 0; t < 3; t++)
+        for (int t = 0; t < 4; t++)
         {
             playSettingsSO.PlayerTypes[t] = t + 1;
         }
@@ -58,11 +99,9 @@ public class MainMenuManager : MonoBehaviour
     public void SetPartyMode()
     {
         PartyMode = true;
-        GameModeTextBox.text = "Party Mode";
     }
     public void UnsetPartyMode()
     {
         PartyMode = false;
-        GameModeTextBox.text = "Standard Mode";
     }
 }

@@ -5,14 +5,8 @@ using UnityEngine.SceneManagement;
 
 public class SceneChange : MonoBehaviour
 {
-
-    public void ExitToMainMenu()
+    public void ChangeScene(string Scene)
     {
-        SceneManager.LoadScene("MainMenu");
-    }
-
-    public void PlayGameTwoPlayer()
-    {
-        SceneManager.LoadScene("TwoPlayerGameScene");
+        SceneManager.LoadScene(Scene);
     }
 }

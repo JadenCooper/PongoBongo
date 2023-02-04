@@ -521,8 +521,8 @@ InputManager:
     m_Name: Vertical(Player3)
     descriptiveName: 
     descriptiveNegativeName: 
-    negativeButton: k
-    positiveButton: i
+    negativeButton: j
+    positiveButton: u
     altNegativeButton: 
     altPositiveButton: 
     gravity: 3
@@ -537,8 +537,8 @@ InputManager:
     m_Name: Vertical(Player4)
     descriptiveName: 
     descriptiveNegativeName: 
-    negativeButton: '[5]'
-    positiveButton: '[8]'
+    negativeButton: l
+    positiveButton: o
     altNegativeButton: 
     altPositiveButton: 
     gravity: 3

@@ -20,10 +20,12 @@ public class Paddle : MonoBehaviour
     private Vector3 IntialScale;
     private Vector3 IntialPosition;
     public bool Player = true;
-    public GameObject ball;
+    public Ball TargetBall;
     private bool choiceMade = false;
     public float choiceTime = 0.4f;
     public bool doubleAcceleration = false;
+    public GameManager gameManager;
+    public bool ActualGame = true;
     // Start is called before the first frame update
     void Awake()
     {
@@ -79,7 +81,11 @@ public class Paddle : MonoBehaviour
             if (!choiceMade)
             {
                 choiceMade = true;
-                Vector2 ballPosition = ball.transform.position;
+                if (ActualGame)
+                {
+                    TargetBall = GetClosestBall(gameManager.balls);
+                }
+                Vector2 ballPosition = TargetBall.gameObject.transform.position;
                 float paddlePosition = gameObject.transform.position.y;
                 if (ballPosition.y > paddlePosition)
                 {
@@ -99,6 +105,25 @@ public class Paddle : MonoBehaviour
         Move();
     }
 
+    private Ball GetClosestBall(List<Ball> Balls)
+    {
+        Debug.Log("HI");
+        Ball bestTarget = null;
+        float closestDistanceSqr = Mathf.Infinity;
+        Vector3 currentPosition = transform.position;
+        foreach (Ball potentialBall in Balls)
+        {
+            Vector3 directionToTarget = potentialBall.gameObject.transform.position - currentPosition;
+            float dSqrToTarget = directionToTarget.sqrMagnitude;
+            if (dSqrToTarget < closestDistanceSqr)
+            {
+                closestDistanceSqr = dSqrToTarget;
+                bestTarget = potentialBall;
+            }
+        }
+        Debug.Log(bestTarget);
+        return bestTarget;
+    }
     private IEnumerator WaitTimer()
     {
         yield return new WaitForSeconds(choiceTime);

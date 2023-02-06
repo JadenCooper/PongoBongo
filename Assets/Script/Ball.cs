@@ -5,11 +5,10 @@ using UnityEngine.Events;
 
 public class Ball : MonoBehaviour
 {
-    const float STARTSPEED = 64f;
+    public float startSpeed = 64f;
     [SerializeField]
     private Vector2 movementVector;
-    [SerializeField]
-    private float currentSpeed = 0;
+    public float currentSpeed = 0;
     [SerializeField]
     private float currentVerticalDirection = 0;
     [SerializeField]
@@ -17,10 +16,9 @@ public class Ball : MonoBehaviour
 
     public float acceleration = 32f;
     private Rigidbody2D rb2d;
-    private Vector3 StartPosition;
+    public Vector3 StartPosition;
     private Vector3 OrginalScale;
-    [SerializeField]
-    private float maxSpeed = 800f;
+    public float maxSpeed = 800f;
     public UnityEvent<Ball> OnCaught = new UnityEvent<Ball>();
     public bool doubleAcceleration = false;
     // Start is called before the first frame update
@@ -31,7 +29,7 @@ public class Ball : MonoBehaviour
 
     private void Start()
     {
-        currentSpeed = STARTSPEED;
+        currentSpeed = startSpeed;
         OrginalScale = gameObject.transform.localScale;
         StartPosition = gameObject.transform.localPosition;
         TipOff();
@@ -170,40 +168,35 @@ public class Ball : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.tag == "Wall")
-        {
-            Hit(false);
-        }
-        else if (collision.gameObject.tag == "HWall")
-        {
-            Hit(true);
-        }
-        else
+        if (collision.gameObject.tag != "Ball")
         {
             Hit(false);
         }
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.tag == "Paddle")
-        {
-            Hit(true);
-        }
-        else if (collision.gameObject.tag == "Catch")
+        if (collision.gameObject.tag == "Catch")
         {
             OnCaught?.Invoke(this);
+        }
+        else
+        {
+            Hit(true);
         }
     }
 
     public void SetUp()
     {
-        currentSpeed = STARTSPEED;
+        currentSpeed = startSpeed;
+        gameObject.transform.localScale = OrginalScale;
+        startSpeed += 10f;
+        maxSpeed += 10f;
         TipOff();
     }
 
     public void ReturnToStart()
     {
-        currentSpeed = STARTSPEED;
+        currentSpeed = startSpeed;
         gameObject.transform.localPosition = StartPosition;
     }
 }

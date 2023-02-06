@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _playerTypes: 01000000000000000000000000000000
   _otherSettings:
-  - 1
+  - 3
   - 0
   - 0

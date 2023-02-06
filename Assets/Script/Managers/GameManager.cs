@@ -1,19 +1,19 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class GameManager : MonoBehaviour
 {
     public List<Ball> balls = new List<Ball>();
     public List<Paddle> paddles = new List<Paddle>();
     public List<float> Scores = new List<float>();
-    public List<GameObject> PlayerWalls = new List<GameObject>();
     public UIManager uIManager;
     public float WinScore = 5;
     public string[] PlayerNames = new string[2];
     private bool GameEnded = false;
     private float ScoreChange = 1;
     public PlaySettingsSO playSettingsSO;
-
+    public UnityEvent OnCaughtEffect = new UnityEvent();
     private void Start()
     {
         for (int i = 0; i < paddles.Count; i++)
@@ -85,6 +85,7 @@ public class GameManager : MonoBehaviour
         {
             ball.gameObject.transform.localPosition = Vector3.zero;
             ball.SetUp();
+            OnCaughtEffect?.Invoke();
         }
     }
     public void GameOver(string WonPlayerName)
@@ -112,11 +113,29 @@ public class GameManager : MonoBehaviour
         {
             paddle.ResetPlay();
         }
-        foreach (Ball ball in balls)
+
+        for (int i = 0; i < balls.Count; i++)
         {
-            ball.gameObject.SetActive(true);
-            ball.gameObject.transform.localPosition = Vector3.zero;
-            ball.SetUp();
+            if (i == 0)
+            {
+                balls[i].gameObject.SetActive(true);
+                balls[i].gameObject.transform.localPosition = Vector3.zero;
+                balls[i].SetUp();
+            }
+            else
+            {
+                Destroy(balls[i].gameObject);
+            }
         }
+        while (balls.Count > 1)
+        {
+            balls.RemoveAt(1);
+        }
+    }
+    public void AddBall(Ball ball)
+    {
+        balls.Add(ball);
+        ball.StartPosition = Vector3.zero;
+        ball.ReturnToStart();
     }
 }

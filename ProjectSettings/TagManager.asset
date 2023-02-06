@@ -8,6 +8,7 @@ TagManager:
   - Catch
   - Wall
   - HWall
+  - Ball
   layers:
   - Default
   - TransparentFX

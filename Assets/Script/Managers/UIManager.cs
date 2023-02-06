@@ -7,19 +7,10 @@ public class UIManager : MonoBehaviour
 {
     public List<TMP_Text> PlayerScoreTexts = new List<TMP_Text>();
     public List<TMP_Text> PlayerNameTexts = new List<TMP_Text>();
-    public GameObject FreeForAllUIHolder;
     public GameObject EndGameUI;
     public GameObject PauseGameUI;
     public TMP_Text WonPlayer;
 
-    public void SetupFreeForAll()
-    {
-        FreeForAllUIHolder.SetActive(true);
-        PlayerNameTexts[0].text = "Player One Lives:";
-        PlayerNameTexts[1].text = "Player Two Lives";
-        PlayerNameTexts[2].text = "Player One Lives:";
-        PlayerNameTexts[3].text = "Player Two Lives";
-    }
     public void RemovePlayer(int playerIndex)
     {
         PlayerScoreTexts[playerIndex].color = Color.clear;

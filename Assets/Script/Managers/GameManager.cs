@@ -11,8 +11,6 @@ public class GameManager : MonoBehaviour
     public float WinScore = 5;
     public string[] PlayerNames = new string[2];
     private bool GameEnded = false;
-    private bool FreeForAll = false;
-    private int TotalPlayersOut = 0;
     private float ScoreChange = 1;
     public PlaySettingsSO playSettingsSO;
 
@@ -53,21 +51,6 @@ public class GameManager : MonoBehaviour
             }
         }
         WinScore = playSettingsSO.OtherSettings[0];
-        if (playSettingsSO.OtherSettings[2] == 1)
-        {
-            //Free For All Mode
-            Scores.Add(0);
-            Scores.Add(0);
-            uIManager.SetupFreeForAll();
-            FreeForAll = true;
-            ScoreChange = -1;
-            for (int i = 0; i < Scores.Count; i++)
-            {
-                Scores[i] = WinScore;
-            }
-            WinScore = 0;
-            uIManager.UpdateScores(Scores);
-        }
     }
     void Update()
     {
@@ -81,84 +64,28 @@ public class GameManager : MonoBehaviour
     {
         Vector2 ballPosition = ball.gameObject.transform.localPosition;
         int playerIndex = 0;
-        if (FreeForAll)
+        if (ballPosition.x < 0)
         {
-            // Free For All
-            if (ballPosition.x < 0)
-            {
-                if (ballPosition.y < 0)
-                {
-                    // Player 3 Loses Life
-                    playerIndex = 2;
-                }
-                else
-                {
-                    //Player 1 loses Life
-                    playerIndex = 0;
-                }
-            }
-            else
-            {
-                if (ballPosition.y < 0)
-                {
-                    //Player 3 Loses Life
-                    playerIndex = 3;
-                }
-                else
-                {
-                    // Player 2 Loses Life
-                    playerIndex = 1;
-                }
-            }
+            // Player 2 Scores
+            playerIndex = 1;
         }
         else
         {
-            // Teams
-            if (ballPosition.x < 0)
-            {
-                // Player 2 Scores
-                playerIndex = 1;
-            }
-            else
-            {
-                // Player 1 Scores
-                playerIndex = 0;
-            }
+            // Player 1 Scores
+            playerIndex = 0;
         }
 
         Scores[playerIndex] += ScoreChange;
         uIManager.UpdateScores(Scores);
         if (Scores[playerIndex] == WinScore)
         {
-            if (FreeForAll)
-            {
-                // Player Eliminated
-                PlayerEliminated(playerIndex);
-                if (TotalPlayersOut == 3)
-                {
-                    GameOver(PlayerNames[playerIndex]);
-                }
-                ball.gameObject.transform.localPosition = Vector3.zero;
-                ball.SetUp();
-            }
-            else
-            {
-                GameOver(PlayerNames[playerIndex]);
-            }
+            GameOver(PlayerNames[playerIndex]);
         }
         else
         {
             ball.gameObject.transform.localPosition = Vector3.zero;
             ball.SetUp();
         }
-    }
-
-    private void PlayerEliminated(int playerIndex)
-    {
-        paddles[playerIndex].gameObject.SetActive(false);
-        PlayerWalls[playerIndex].SetActive(true);
-        uIManager.RemovePlayer(playerIndex);
-        TotalPlayersOut++;
     }
     public void GameOver(string WonPlayerName)
     {
@@ -176,23 +103,7 @@ public class GameManager : MonoBehaviour
     {
         for (int i = 0; i < Scores.Count; i++)
         {
-            if (FreeForAll)
-            {
-                Scores[i] = playSettingsSO.OtherSettings[0];
-            }
-            else
-            {
-                Scores[i] = 0;
-            }
-        }
-        if (FreeForAll)
-        {
-            for (int i = 0; i < PlayerWalls.Count; i++)
-            {
-                PlayerWalls[i].SetActive(false);
-                uIManager.AddPlayer(i);
-                paddles[i].gameObject.SetActive(true);
-            }
+            Scores[i] = 0;
         }
         uIManager.UpdateScores(Scores);
         GameEnded = false;

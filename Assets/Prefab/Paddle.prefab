@@ -105,10 +105,9 @@ MonoBehaviour:
   acceleration: 64
   maxSpeed: 200
   PlayerType: 1
-  IntialScale: {x: 0, y: 0, z: 0}
   Player: 1
   ball: {fileID: 0}
-  choiceTime: 0.4
+  choiceTime: 0.3
   doubleAcceleration: 0
 --- !u!50 &-7755349870709299706
 Rigidbody2D:

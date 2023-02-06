@@ -60,11 +60,18 @@ public class MainMenuManager : MonoBehaviour
         SetDefualtGameOptions();
         int i = (int)BotSlider.value;
         int temp = 3;
-        while (i != 0)
+        if (i == 1 && PlayerAmountDropDown.value == 0)
         {
-            playSettingsSO.PlayerTypes[temp] = 0;
-            temp--;
-            i--;
+            playSettingsSO.PlayerTypes[1] = 0;
+        }
+        else
+        {
+            while (i != 0)
+            {
+                playSettingsSO.PlayerTypes[temp] = 0;
+                temp--;
+                i--;
+            }
         }
         playSettingsSO.OtherSettings[2] = PlayerAmountDropDown.value; // Game Size
         playSettingsSO.OtherSettings[0] = ScoreSlider.value;

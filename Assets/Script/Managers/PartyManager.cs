@@ -7,7 +7,7 @@ public class PartyManager : MonoBehaviour
     public GameManager gameManager;
     public Vector2 MaxMinPaddleScale = new Vector2(1.7f, 0.21f);
     public Vector2 MaxMinBallScale = new Vector2(1.2f, 0.16f);
-    private int AmountOfEffects = 10;
+    private int AmountOfEffects = 12;
     public GameObject IntialBall;
     public PartyColors partyColors;
     public List<GameObject> ListOfGameObjects = new List<GameObject>();
@@ -20,7 +20,7 @@ public class PartyManager : MonoBehaviour
     {
         switch (Random.Range(0, AmountOfEffects))
         {
-            case 0:
+            case 0: case 11: case 12:
                 Debug.Log("Add Ball");
                 AddBall();
                 break;

@@ -107,7 +107,6 @@ public class Paddle : MonoBehaviour
 
     private Ball GetClosestBall(List<Ball> Balls)
     {
-        Debug.Log("HI");
         Ball bestTarget = null;
         float closestDistanceSqr = Mathf.Infinity;
         Vector3 currentPosition = transform.position;
@@ -121,7 +120,6 @@ public class Paddle : MonoBehaviour
                 bestTarget = potentialBall;
             }
         }
-        Debug.Log(bestTarget);
         return bestTarget;
     }
     private IEnumerator WaitTimer()

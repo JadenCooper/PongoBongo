@@ -80,6 +80,7 @@ public class PartyManager : MonoBehaviour
         {
             if (paddle.gameObject.transform.localScale.x < MaxMinPaddleScale.x)
             {
+                paddle.ResetPlay();
                 paddle.gameObject.transform.localScale *= 2;
             }
             else

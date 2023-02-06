@@ -168,7 +168,29 @@ public class Ball : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.tag != "Ball")
+        if (collision.gameObject.tag == "Ball")
+        {
+            switch (Random.Range(0, 3))
+            {
+                case 0:
+                    movementVector = new Vector2(-1, -1);
+                    break;
+                case 1:
+                    movementVector = new Vector2(-1, 1);
+                    break;
+                case 2:
+                    movementVector = new Vector2(1, -1);
+                    break;
+                case 3:
+                    movementVector = new Vector2(1, 1);
+                    break;
+
+                default:
+                    Debug.Log("Ball On Ball Broke");
+                    break;
+            }
+        }
+        else
         {
             Hit(false);
         }
